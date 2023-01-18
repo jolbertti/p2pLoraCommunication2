@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <div id="title">Sensorin havainnot</div>
+  <div id="chart-wrapper">
+    <canvas id="chart"></canvas>
+<style>
+  body {
+  font-family: 'Roboto';
+  color: #333;
+  background-color: #F9F7EB;
+}
+
+#title {
+  font-family: 'Merriweather';
+  text-align: center;
+  padding: 30px;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  color: #333;
+}
+
+#chart-wrapper {
+  height: 1000px;
+}
+</style>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+<script>
+Chart.defaults.global.defaultFontFamily = 'Roboto';
+Chart.defaults.global.defaultFontColor = '#333';
+
+function makeChart(sensorData) {
+  var hour = sensorData.map(function(d) {return d.Hour});
+  var observed = sensorData.map(function(d) {return +d.Observations});
+  var chart = new Chart('chart', {
+    type: 'line',
+    options: {
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+    },
+    data: {
+      labels: hour,
+      datasets: [
+        {
+          data: observed
+        }
+      ]
+    }
+  })
+}
+
+d3.csv('sample.csv')
+  .then(makeChart);
+</script>
