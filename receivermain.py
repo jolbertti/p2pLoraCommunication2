@@ -6,22 +6,23 @@ import sys
 import machine
 import struct
 
+page = open("index.html", "r")
+html = page.read()
+page.close()
 led = machine.Pin("LED", machine.Pin.OUT)
 uart = UART(0, baudrate=9600, tx=Pin(0), rx=Pin(1), bits=8, parity=None, stop=1)
 uart.write('AT+MODE=TEST\r\n')
 lastSeen = ""
 juu = True
 time.sleep(5)
-ssid = '***********' #Your network name
-password = '*********' #Your WiFi password
+ssid = '**************' #Your network name
+password = '************' #Your WiFi password
 NTP_DELTA = 2208988800
 host = "pool.ntp.org"
 
-#initialize I2C 
-i2c= machine.ADC(4)
-conversion_factor = 3.3 / (65535)
 
 def set_time():
+    # get the correct time from the internet
     NTP_QUERY = bytearray(48)
     NTP_QUERY[0] = 0x1B
     addr = socket.getaddrinfo(host, 123)[0][-1]
@@ -67,40 +68,36 @@ def open_socket(ip):
     connection.listen(1)
     return connection
 
-def webpage(reading):
+def webpage():
     #Template HTML
-    html = f"""
-            <!DOCTYPE html>
-            <html>
-            <head>
-            <title>Pico W Weather Station</title>
-            <meta http-equiv="refresh" content="10">
-            </head>
-            <body>
-            <p>{reading}</p>
-            </body>
-            </html>
-            """
     return str(html)
     
 def serve(connection):
-    #Start a web server
+    #Start a web server which shows a chart of most active hours
     uart.write('AT+TEST=RXLRPKT\r\n')
     time.sleep(1)
     lastSeen = str(time.localtime(3))
     while True:
-        readingki = i2c.read_u16() * conversion_factor
-        temperature = 27 - (readingki - 0.706)/0.001721 
-        reading = "Temperature: {}".format(temperature) + " / Viimeksi nähty " + lastSeen
         byte_read = uart.readline()
         if byte_read != None:
+            # if we receive a message which says ABCD, we log the time into a csv file stored on the pico
             if "ABCD" in byte_read:
-                print("joodjdj")
+                print("data received")
+                logf = open("sample.csv", "a")
+                try:
+                    lastSeen = time.localtime()
+                    logf.write(str(lastSeen[4]))
+                    logf.write("\r\n")
+                except OSError:
+                    print("????")
+                logf.close()
+                print("Data writing done")
                 lastSeen = str(time.localtime())
+                
         client = connection.accept()[0]
         request = client.recv(1024)
         request = str(request)       
-        html = webpage(reading)
+        html = webpage()
         client.send(html)
         client.close()
 
