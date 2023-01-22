@@ -6,7 +6,7 @@ The receiver device is at home, and it creates a webserver where the motion sens
 This way, I will be able to know when and where the animals are active which is useful when trying to photograph them.
  
  
-This is what the graph on the website looks like:
+This is what the graph on the website looks like, Y axis is the amount of times something passed the sensor and X is the time of day:
 
 
 ![Näyttökuva 2023-01-21 231313](https://user-images.githubusercontent.com/84034458/213887383-e0ea34f6-e521-4115-b946-41f737e9c9c0.png)
