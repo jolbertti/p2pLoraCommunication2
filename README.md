@@ -6,10 +6,18 @@ The receiver device is at home, and it creates a webserver where the motion sens
 This way, I will be able to know when and where the animals are active which is useful when trying to photograph them.
  
  
-This is what the website looks like as the sensor data is automatically logged:
+This is what the graph on the website looks like:
 
 
 ![Näyttökuva 2023-01-21 231313](https://user-images.githubusercontent.com/84034458/213887383-e0ea34f6-e521-4115-b946-41f737e9c9c0.png)
+
+
+
+
+The receiver on the left and the transmitter on the right, even Steve Jobs couldn't have done it better:
+
+
+![IMG_20230122_142014](https://user-images.githubusercontent.com/84034458/213915765-6e2c2c0d-8d82-4804-9638-695ffdcd0338.jpg)
 
 
 
@@ -23,6 +31,11 @@ PARTS NEEDED
 
 WIRING
 
+
+![transmitter](https://user-images.githubusercontent.com/84034458/213915950-5fd25cff-c7a0-476d-a0ce-4734130086b8.jpg)
+
+
+The receiver is basically the same but without the battery and motion sensor.
 
 
 
