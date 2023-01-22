@@ -41,6 +41,6 @@ The receiver is basically the same but without the battery and motion sensor.
 
 CODE
 
-Put the receivermain.py and transmittermain.py into the receiver and transmitter Picos and rename both of them main.py so they will run when powered up.
+Put the receivermain.py into the receiver Pico W and and transmittermain.py into transmitter Pico and rename both of them main.py so they will run when powered up. The receiver also needs the index.html file to create the website. 
 
 
