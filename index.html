@@ -30,6 +30,8 @@
 Chart.defaults.global.defaultFontFamily = 'Roboto';
 Chart.defaults.global.defaultFontColor = '#333';
 var count_by_source
+
+// create a chart to visualize sensor data
 function makeChart(sensorData) {
   var hour = sensorData.map(function(d) {return d.Hour});
   var observed = sensorData.map(function(d) {return +d.Observations});
@@ -82,12 +84,15 @@ function makeChart(sensorData) {
     }
   })
 }
+  
+// find the how many data entries there are for each hour of the day
 d3.csv("sample.csv").then(function(data) {
   count_by_source = d3.nest().key(d => d.Hour)
     .rollup(v => v.length)
     .entries(data);
   console.log(count_by_source)
 });
+// make the chart from csv stored on the device
 d3.csv('sample.csv')
   .then(makeChart);
 </script>
